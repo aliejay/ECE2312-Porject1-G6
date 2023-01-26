@@ -17,5 +17,5 @@ disp("Recording over")
 
 audioArray = getaudiodata(recorder);
 plot(audioArray)
-Title("Audio")
+title("Audio")
 
