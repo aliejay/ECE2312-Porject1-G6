@@ -5,7 +5,7 @@ info.input(2)
 Fs = 8000;
 nBits = 8;
 nChannels = 1;
-duration = 5;
+duration = 4;
 
 recorder = audiorecorder(Fs, nBits, nChannels, 1);
 
@@ -33,32 +33,42 @@ disp("Recording over")
 
 audioArray = getaudiodata(recorder, "double");
 clf
-subplot(2, 1, 1)
 t = [0: length(audioArray)-1]/ Fs;
 plot(t, audioArray)
 title("Audio")
 xlabel("Time")
 ylabel("Magnitude")
 
-subplot(2, 1, 2)
+
+% window = hamming(512);
+% N_overlap = 256;
+% N_fft = 1024;
+% [S, F, T, P] = spectrogram(audioArray, window, N_overlap, N_fft, Fs, 'yaxis');
+% figure;
+% surf(T, F, 10*log10(P), 'edgecolor', 'none');
+% axis tight;
+% view(0,90);
+% colormap(jet);
+% set(gca,'clim', [-80 -20]);
+% ylim([0 8000]);
+% xlabel('Time (s)');
+% ylabel('Frequency (Hz)');
+
+filename = 'quickFox.wav';
+audiowrite(filename, audioArray, Fs);
+
+[y, Fs] = audioread(filename);
+
 window = hamming(512);
 N_overlap = 256;
 N_fft = 1024;
-[S, F, T, P] = spectrogram(audioArray, window, N_overlap, N_fft, Fs, 'yaxis');
+[S, F, T, P] = spectrogram(y, window, N_overlap, N_fft, Fs, 'yaxis');
 figure;
 surf(T, F, 10*log10(P), 'edgecolor', 'none');
 axis tight;
 view(0,90);
 colormap(jet);
-set(gca, 'clim', [-80 -20]);
+set(gca,'clim', [-80 -20]);
 ylim([0 8000]);
 xlabel('Time (s)');
 ylabel('Frequency (Hz)');
-
-
-
-
-
-
-
-
