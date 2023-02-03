@@ -35,38 +35,38 @@ disp("Recording over")
 audioArray = getaudiodata(recorder, "double");
 zerosArr = zeros(length(audioArray),1);
 
-audioArray = [audioArray(:), zerosArr(:)];
+audioArraya = [audioArray(:), zerosArr(:)];
 
-
-clf
-t = [0: length(audioArray)-1]/ Fs;
-plot(t, audioArray)
-title("Audio")
-xlabel("Time")
-ylabel("Magnitude")
-
-
-% window = hamming(512);
-% N_overlap = 256;
-% N_fft = 1024;
-% [S, F, T, P] = spectrogram(audioArray, window, N_overlap, N_fft, Fs, 'yaxis');
-% figure;
-% surf(T, F, 10*log10(P), 'edgecolor', 'none');
-% axis tight;
-% view(0,90);
-% colormap(jet);
-% set(gca,'clim', [-80 -20]);
-% ylim([0 8000]);
-% xlabel('Time (s)');
-% ylabel('Frequency (Hz)');
 % 
+% clf
+% t = [0: length(audioArray)-1]/ Fs;
+% plot(t, audioArray)
+% title("Audio")
+% xlabel("Time")
+% ylabel("Magnitude")
+
+
+window = hamming(512);
+N_overlap = 256;
+N_fft = 1024;
+[S, F, T, P] = spectrogram(audioArray, window, N_overlap, N_fft, Fs, 'yaxis');
+figure;
+surf(T, F, 10*log10(P), 'edgecolor', 'none');
+axis tight;
+view(0,90);
+colormap(jet);
+set(gca,'clim', [-80 -20]);
+ylim([0 8000]);
+xlabel('Time (s)');
+ylabel('Frequency (Hz)');
+
 
 filename = 'team[6]-stereosoundfile.wav';
-audiowrite(filename, audioArray, Fs);
+audiowrite(filename, audioArraya, Fs);
 audioinfo(filename)
 [y, Fs] = audioread(filename);
 disp(y)
-% 
+
 % window = hamming(512);
 % N_overlap = 256;
 % N_fft = 1024;
